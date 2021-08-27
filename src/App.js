@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import UserTable from './components/UserTable';
-import AddUserForm from './components/AddUserForm';
+import AddMedicamentoForm from './components/AddMedicamentoForm';
 import EditYo from './components/EditYo';
 import { v4 as uuidv4 } from 'uuid';
+import { Button, Divider } from '@material-ui/core';
+import ListaMedicamentos from './components/ListaMedicamentos';
 
 function App() {
 
@@ -47,7 +49,14 @@ function App() {
 
   return (
     <div className="container">
-      <h1>CRUD App with Hooks</h1>
+      <h1>Laboratorio</h1>
+      <Button color="primary">Medicamentos "Aerosol"</Button>
+      <Button color="secondary">Medicamentos Init "A"</Button>
+
+
+      <ListaMedicamentos />
+
+      <Divider></Divider>
       <div className="flex-row">
         <div className="flex-large">
         {editing ? (
@@ -61,13 +70,13 @@ function App() {
           </div>
         ) : (
           <div>
-            <h2>Add user</h2>
-            <AddUserForm addUser={addUser}  />
+            <h2>Agregar Medicamento</h2>
+            <AddMedicamentoForm addUser={addUser}  />
           </div>
         )}
       </div>
         <div className="flex-large">
-          <h2>View users</h2>
+          <h2>Listado de medicamentos</h2>
           <UserTable users={users} deleteUser={deleteUser} editRow={editRow} />
         </div>
       </div>
