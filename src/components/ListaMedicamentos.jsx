@@ -44,7 +44,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ListaMedicamentos() {
+export default function ListaMedicamentos(props) {
   const classes = useStyles();
 
   return (

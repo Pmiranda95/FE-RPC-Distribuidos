@@ -5,63 +5,60 @@ import {
   Select,
   TextField,
 } from "@material-ui/core";
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { useState } from "react";
 
 
 
-const AddMedicamentoForm = (props) => {
-  const { register, errors, handleSubmit } = useForm();
-  const [tipo, setTipo] = React.useState("");
+const AddMedicamentoForm = () => {
+  const [tipo, setTipo] = useState("");
+  const [name,setName] = useState('');  
+  const [codigo,setCodigo] = useState('');  
+  const [descripcion,setDescripcion] = useState('');  
 
   const handleChange = (event) => {
     setTipo(event.target.value);
   };
 
-  const onSubmit = (data, e) => {
-    data.id = null;
-    console.log(data);
-    props.addUser(data);
+  const onSubmit = (e) => {
+    const body = {
+      name:name,
+      codigo:codigo,
+      descripcion:descripcion,
+      tipo:tipo,
+    }
+    console.log(body);
     e.target.reset();
+    e.preventDefault();
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={onSubmit}>
         <TextField
           fullWidth
           name="name"
-          ref={register({
-            required: { value: true, message: "Valor requerido" },
-          })}
           placeholder="Nombre medicamento"
           variant="filled"
           margin="none"
+          onChange={(event) => {setName(event.target.value)}}
         />
-
-        <div>{errors?.name?.message}</div>
         <label>Codigo</label>
         <TextField
           fullWidth
           type="text"
-          name="username"
-          ref={register({
-            required: { value: true, message: "Valor requerido" },
-          })}
+          name="codigo"
           variant="filled"
           margin="none"
+          onChange={(event) => {setCodigo(event.target.value)}}
         />
-        <div>{errors?.username?.message}</div>
         <label>Descripcion</label>
         <TextField
           fullWidth
           type="text"
           name="descripcion"
-          ref={register({
-            required: { value: true, message: "Valor requerido" },
-          })}
           variant="filled"
           margin="none"
+          onChange={(event) => {setDescripcion(event.target.value)}}
         />
         <InputLabel id="demo-simple-select-label">Tipo</InputLabel>
         <Select
