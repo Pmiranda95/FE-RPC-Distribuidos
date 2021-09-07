@@ -46,25 +46,27 @@ const useStyles = makeStyles({
 
 export default function ListaMedicamentos(props) {
   const classes = useStyles();
-
+  const {lista} = props;
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell align="center">Codigo</StyledTableCell>
             <StyledTableCell align="center">Nombre</StyledTableCell>
-            <StyledTableCell align="center">Descripcion</StyledTableCell>
+            <StyledTableCell align="center">Codigo numerico</StyledTableCell>
+            <StyledTableCell align="center">Codigo alfabetico</StyledTableCell>
+            <StyledTableCell align="center">Droga</StyledTableCell>
             <StyledTableCell align="center">Tipo</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
-              <StyledTableCell align="center">{row.calories}</StyledTableCell>
-              <StyledTableCell align="center">{row.fat}</StyledTableCell>
-              <StyledTableCell align="center">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="center">{row.protein}</StyledTableCell>
+          {lista.map((row) => (
+            <StyledTableRow key={row.CodigoAlfabetico}>
+              <StyledTableCell align="center">{row.Nombre}</StyledTableCell>
+              <StyledTableCell align="center">{row.CodigoNumerico}</StyledTableCell>
+              <StyledTableCell align="center">{row.CodigoAlfabetico}</StyledTableCell>
+              <StyledTableCell align="center">{row.Droga}</StyledTableCell>
+              <StyledTableCell align="center">{row.TipoMedicamento}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

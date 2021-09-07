@@ -5,66 +5,100 @@ import {
   Select,
   TextField,
 } from "@material-ui/core";
-import React, { useState } from "react";
-
-
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Formik } from "formik";
+import * as Yup from 'yup'
 
 const AddMedicamentoForm = () => {
-  const [tipo, setTipo] = useState("");
-  const [name,setName] = useState('');  
-  const [codigo,setCodigo] = useState('');  
-  const [descripcion,setDescripcion] = useState('');  
 
-  const handleChange = (event) => {
-    setTipo(event.target.value);
-  };
+  useEffect( async() => {
+   const tipos = await axios('https://localhost:5001/api/AltaMedicamento');
+  }, [])
 
-  const onSubmit = (e) => {
+  const onSubmit = (values)  => {
+    console.log(values);
     const body = {
-      name:name,
-      codigo:codigo,
-      descripcion:descripcion,
-      tipo:tipo,
+      nombre:values.nombre,
+      codNumerico: Number(values.codNumerico),
+      codAlfabetico:values.codAlfabetico,
+      digito:0,
+      droga:values.droga,
+      tipo:1,
     }
-    console.log(body);
-    e.target.reset();
-    e.preventDefault();
+    axios.post('https://localhost:5001/api/AltaMedicamento', body).then(response => response.status)
+    .catch(err => console.warn(err));
   };
 
   return (
     <div>
-      <form onSubmit={onSubmit}>
+      <Formik
+      initialValues={{
+        nombre:'',
+        codNumerico:'',
+        codAlfabetico:'',
+        digito:0,
+        droga:'',
+        tipo:'',
+      }}
+      validationSchema={Yup.object().shape({
+        nombre: Yup.string().required('Campo obligatorio'),
+        codNumerico: Yup.string().min(5,'Minimo 5 digitos').required('Campo obligatorio'),
+        codAlfabetico: Yup.string().min(3,'Minimo 3 caracteres').matches(/^[aA-zZ\s]+$/, "Unicamente letras").required('Campo obligatorio'),
+        droga: Yup.string().required('Campo obligatorio'),
+        tipo: Yup.string().required('Campo obligatorio'),
+      })}
+      onSubmit={(values) => onSubmit(values)}
+      >
+      {
+        ({handleSubmit, handleChange, errors}) => (
+          <form onSubmit={handleSubmit}>
         <TextField
           fullWidth
-          name="name"
+          name="nombre"
           placeholder="Nombre medicamento"
           variant="filled"
           margin="none"
-          onChange={(event) => {setName(event.target.value)}}
+          error={errors.nombre?true:false}
+          helperText={errors.nombre}
+          onChange={handleChange}
         />
-        <label>Codigo</label>
+        <label>Codigo Numerico</label>
+        <TextField
+          fullWidth
+          type="number"
+          name="codNumerico"
+          variant="filled"
+          margin="none"
+          onChange={handleChange}
+          error={errors.codNumerico?true:false}
+          helperText={errors.codNumerico}
+        />
+        <label>Codigo Alfanumerico</label>
         <TextField
           fullWidth
           type="text"
-          name="codigo"
+          name="codAlfabetico"
           variant="filled"
           margin="none"
-          onChange={(event) => {setCodigo(event.target.value)}}
+          onChange={handleChange}
+          error={errors.codAlfabetico?true:false}
+          helperText={errors.codAlfabetico}
         />
-        <label>Descripcion</label>
+        <label>Droga</label>
         <TextField
           fullWidth
           type="text"
-          name="descripcion"
+          name="droga"
           variant="filled"
           margin="none"
-          onChange={(event) => {setDescripcion(event.target.value)}}
+          onChange={handleChange}
         />
         <InputLabel id="demo-simple-select-label">Tipo</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={tipo}
+          name="tipo"
           onChange={handleChange}
           fullWidth
         >
@@ -76,6 +110,9 @@ const AddMedicamentoForm = () => {
           Agregar Medicamento
         </Button>
       </form>
+        )
+      }
+      </Formik>
     </div>
   );
 };

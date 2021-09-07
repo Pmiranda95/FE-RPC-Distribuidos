@@ -1,12 +1,18 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import AddTipo from './components/AddTipo';
 import AddMedicamentoForm from './components/AddMedicamentoForm';
-import { v4 as uuidv4 } from 'uuid';
 import { Button, Divider } from '@material-ui/core';
 import ListaMedicamentos from './components/ListaMedicamentos';
+import axios from 'axios';
 
 function App() {
 
+  const [lista,setLista] = useState([]);
+
+  const traerMedicamentos = async (url)  => {
+    const resp = await axios(`https://localhost:5001/api/${url}`)
+    setLista(resp.data)
+  }
 
   return (
     <div className="container">
@@ -25,11 +31,11 @@ function App() {
       <Divider></Divider>
 
       <h1>Laboratorio</h1>
-      <Button color="primary">Medicamentos "Aerosol"</Button>
-      <Button color="secondary">Medicamentos Init "A"</Button>
+      <Button color="primary" onClick={() => traerMedicamentos('TraerAerosoles')}>Medicamentos "Aerosol"</Button>
+      <Button color="secondary"  onClick={()=>traerMedicamentos('TraerMedicamenosConA')}>Medicamentos Init "A"</Button>
 
 
-      <ListaMedicamentos />
+      <ListaMedicamentos lista={lista}/>
     </div>
   );
 }

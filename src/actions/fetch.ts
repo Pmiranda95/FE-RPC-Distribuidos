@@ -1,5 +1,5 @@
 
-export const fetchFunction = ( endpoint, data?, method = 'GET' ) => {
+export const fetchFunction = ( endpoint:string, data:any, method = 'GET' ) => {
 
     const url = `${ 'localhost:5001' }/${ endpoint }`;
 

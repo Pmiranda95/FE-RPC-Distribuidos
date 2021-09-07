@@ -1,4 +1,5 @@
 import { Button, TextField } from "@material-ui/core";
+import axios from "axios";
 import React, { useState } from "react";
 
 const AddTipo = (props) => {
@@ -6,13 +7,13 @@ const AddTipo = (props) => {
   const [tipo,setTipo] = useState('');  
 
   const onSubmit = (e) => {
+    const body = {tipo:tipo}
     e.preventDefault();
+    axios.post('https://localhost:5001/api/AltaTipoMedicamento', body).then(response => response.status)
+    .catch(err => console.warn(err));
+    setTipo('')
   };
 
-  const handleChange = (event) => {
-      console.log(event.target.value);
-    setTipo({value: event.target.value});
-  }
   return (
     <form onSubmit={onSubmit}>
       <label>Name</label>
@@ -21,7 +22,7 @@ const AddTipo = (props) => {
         type="text"
         name="tipo"
         variant="filled"
-        onChange={handleChange}
+        onChange={(e)=>setTipo(e.target.value)}
       />
       <Button type="submit" color="primary">
         Agregar Medicamento
