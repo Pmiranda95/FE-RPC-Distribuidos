@@ -1,5 +1,6 @@
 export const esPrioritario = (codigo) => {
     const char = codigo.charAt(0)
+    console.log((char === "P" || char === "W") ? true : false)
     return (char === "P" || char === "W") ? true : false
 }
 
@@ -12,7 +13,7 @@ export const verificar = (codigo) => {
         digitoVerificadorGenerado = getDigitoVerificador(digitoVerificadorGenerado)
         longitud = digitoVerificadorGenerado.length
     }
-    console.log("digitoVerificadorGenerado", digitoVerificadorGenerado)
+    
     return digitoVerificadorGenerado == digitoVerificador
 }
 
