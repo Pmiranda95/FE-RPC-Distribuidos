@@ -6,26 +6,28 @@ const AddTipo = (props) => {
 
   const [tipo,setTipo] = useState('');  
 
-  const onSubmit = (e) => {
+  const onSubmit = async(e) => {
     const body = {tipo:tipo}
-    e.preventDefault();
-    axios.post('https://localhost:5001/api/AltaTipoMedicamento', body).then(response => response.status)
+    await axios.post('https://localhost:5001/api/AltaTipoMedicamento', body).then(response => response.status)
     .catch(err => console.warn(err));
     setTipo('')
+    props.traerTiposMedicamento();
+    e.preventDefault();
   };
 
   return (
     <form onSubmit={onSubmit}>
-      <label>Name</label>
+      <label>Nombre</label>
       <TextField
         fullWidth
         type="text"
         name="tipo"
         variant="filled"
         onChange={(e)=>setTipo(e.target.value)}
+        required
       />
       <Button type="submit" color="primary">
-        Agregar Medicamento
+        Agregar Tipo medicamento
       </Button>
     </form>
   );

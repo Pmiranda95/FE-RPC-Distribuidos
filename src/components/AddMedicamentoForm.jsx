@@ -12,11 +12,23 @@ import * as Yup from 'yup'
 
 const AddMedicamentoForm = () => {
 
+  const [tiposMedicamentos,setTiposMedicamentos] = useState([])
+
+  const [init,setInit] = useState({
+    nombre:'',
+    codNumerico:'',
+    codAlfabetico:'',
+    digito:0,
+    droga:'',
+    tipo:'',
+  })
+
   useEffect( async() => {
-   const tipos = await axios('https://localhost:5001/api/AltaMedicamento');
+   const tipos = await axios('https://localhost:5001/api/TraerTiposMedicamentos');
+   setTiposMedicamentos(tipos.data)
   }, [])
 
-  const onSubmit = (values)  => {
+  const onSubmit = async  (values)  => {
     console.log(values);
     const body = {
       nombre:values.nombre,
@@ -24,23 +36,17 @@ const AddMedicamentoForm = () => {
       codAlfabetico:values.codAlfabetico,
       digito:0,
       droga:values.droga,
-      tipo:1,
+      tipo:values.tipo,
     }
-    axios.post('https://localhost:5001/api/AltaMedicamento', body).then(response => response.status)
+    await axios.post('https://localhost:5001/api/AltaMedicamento', body).then(response => response.status)
     .catch(err => console.warn(err));
+
   };
 
   return (
     <div>
       <Formik
-      initialValues={{
-        nombre:'',
-        codNumerico:'',
-        codAlfabetico:'',
-        digito:0,
-        droga:'',
-        tipo:'',
-      }}
+      initialValues={init}
       validationSchema={Yup.object().shape({
         nombre: Yup.string().required('Campo obligatorio'),
         codNumerico: Yup.string().min(5,'Minimo 5 digitos').required('Campo obligatorio'),
@@ -48,7 +54,9 @@ const AddMedicamentoForm = () => {
         droga: Yup.string().required('Campo obligatorio'),
         tipo: Yup.string().required('Campo obligatorio'),
       })}
-      onSubmit={(values) => onSubmit(values)}
+      onSubmit={(values,{resetForm})=>{onSubmit(values)
+        resetForm(init)
+      }}
       >
       {
         ({handleSubmit, handleChange, errors}) => (
@@ -102,9 +110,7 @@ const AddMedicamentoForm = () => {
           onChange={handleChange}
           fullWidth
         >
-          <MenuItem value={10}>Droga</MenuItem>
-          <MenuItem value={20}>Analgesicos</MenuItem>
-          <MenuItem value={30}>Morfina</MenuItem>
+          {tiposMedicamentos.map(res => <MenuItem value={res.id}>{res.tipo}</MenuItem>)}
         </Select>
         <Button type="submit" color="primary">
           Agregar Medicamento
