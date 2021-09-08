@@ -84,7 +84,7 @@ function App() {
         color="secondary"
         onClick={() => traerMedicamentos('TraerMedicamenosConA')}
       >
-        Medicamentos Init "A"
+        Medicamentos que comienzan con "A"
       </Button>
       <Divider></Divider>
       <ListaMedicamentos lista={lista} />
