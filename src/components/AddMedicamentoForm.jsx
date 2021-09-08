@@ -112,7 +112,7 @@ const AddMedicamentoForm = () => {
         >
           {tiposMedicamentos.map(res => <MenuItem value={res.id}>{res.tipo}</MenuItem>)}
         </Select>
-        <Button type="submit" color="primary">
+        <Button variant="outlined" type="submit" color="primary">
           Agregar Medicamento
         </Button>
       </form>

@@ -33,6 +33,7 @@ const FunctionsForm = () => {
           required
         />
         <Button
+          variant="outlined"
           type="submit"
           color="primary"
           onClick={(e) => onClickEsPrioritario(e)}
@@ -40,6 +41,7 @@ const FunctionsForm = () => {
           Verificar prioridad
         </Button>
         <Button
+          variant="outlined"
           type="submit"
           color="primary"
           onClick={(e) => onClickVerificar(e)}

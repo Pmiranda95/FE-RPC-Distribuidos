@@ -76,12 +76,14 @@ function App() {
       <h1>Laboratorio</h1>
       <Button
         color="primary"
+        variant="outlined"
         onClick={() => traerMedicamentos('TraerAerosoles')}
       >
         Medicamentos "Aerosol"
       </Button>
       <Button
-        color="secondary"
+        variant="outlined"
+        color="primary"
         onClick={() => traerMedicamentos('TraerMedicamenosConA')}
       >
         Medicamentos que comienzan con "A"
@@ -97,7 +99,7 @@ function App() {
         {tipos.map((value) => (
           <ListItem button>
             <ListItemText id={value.id} primary={value.tipo} />
-            <Button onClick={() => eliminarTipo(value.tipo)}>
+            <Button variant="outlined" onClick={() => eliminarTipo(value.tipo)}>
               <DeleteIcon />
             </Button>
           </ListItem>

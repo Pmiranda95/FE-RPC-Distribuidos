@@ -26,7 +26,7 @@ const AddTipo = (props) => {
         onChange={(e)=>setTipo(e.target.value)}
         required
       />
-      <Button type="submit" color="primary">
+      <Button variant="outlined" type="submit" color="primary">
         Agregar Tipo medicamento
       </Button>
     </form>
