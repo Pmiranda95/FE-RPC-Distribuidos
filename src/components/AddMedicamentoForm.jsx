@@ -82,7 +82,7 @@ const AddMedicamentoForm = () => {
           error={errors.codNumerico?true:false}
           helperText={errors.codNumerico}
         />
-        <label>Codigo Alfanumerico</label>
+        <label>Codigo Alfabetico</label>
         <TextField
           fullWidth
           type="text"
