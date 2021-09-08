@@ -13,7 +13,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-hook-form": "^4.9.8",
-    "react-scripts": "3.4.0",
+    "react-scripts": "^1.1.5",
     "typescript": "^4.4.2",
     "uuid": "^7.0.0",
     "yup": "^0.32.9"

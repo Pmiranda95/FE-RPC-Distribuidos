@@ -5,6 +5,7 @@ import { Button, Divider, List, ListItem, ListItemText, makeStyles, Typography }
 import ListaMedicamentos from './components/ListaMedicamentos';
 import axios from 'axios';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { esPrioritario, verificar } from './functions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -12,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
 }));
-
 
 function App() {
 
